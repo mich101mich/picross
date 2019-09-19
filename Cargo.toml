@@ -1,0 +1,16 @@
+[package]
+name = "game"
+version = "0.1.0"
+authors = ["mich101mich <mich101mich@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+stdweb = "0.4.18"
+rand = { version = "0.7.2", features = ["stdweb"] }
+wee_alloc = "0.4.5"
+
+[target.'cfg(not(cargo_web))'.dependencies]
+wasm-bindgen = "0.2.50"
+
+[target.'cfg(debug_assertions)'.dependencies]
+console_error_panic_hook = "0.1.6"

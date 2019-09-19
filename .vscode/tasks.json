@@ -1,0 +1,64 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558 
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build desktop",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"build"
+			],
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "build web",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"web",
+				"build",
+				"--release"
+			],
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "clean web",
+			"type": "shell",
+			"command": "rm",
+			"args": [
+				"-rf",
+				"docs",
+			],
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "deploy web",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"web",
+				"deploy",
+				"--release",
+				"-o",
+				"docs"
+			],
+			"dependsOn": "clean web",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "build all",
+			"dependsOn": [
+				"build desktop",
+				"deploy web"
+			],
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
