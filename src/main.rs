@@ -23,8 +23,6 @@ pub fn main() {
 
 	log!("Hello world!");
 
-	document().head().unwrap().append_html("<link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />").ok();
-
 	let storage = window().local_storage();
 
 	let parsed = storage
