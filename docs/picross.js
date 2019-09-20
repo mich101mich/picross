@@ -564,17 +564,20 @@ Module.STDWEB_PRIVATE.acquire_tmp = function( dummy ) {
             "__cargo_web_snippet_118f0890c89dea663a9de1e37da3209056824ede": function($0, $1, $2, $3) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);$2 = Module.STDWEB_PRIVATE.to_js($2);$3 = Module.STDWEB_PRIVATE.to_js($3);Module.STDWEB_PRIVATE.from_js($0, (function(){try{($1).insertAdjacentHTML(($2),($3));return{success:true};}catch(error){return{error:error,success:false};}})());
             },
+            "__cargo_web_snippet_133dc76bb1b71c4c01bb36ad66f6e9e9e56d7c29": function($0, $1) {
+                $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).head;})());
+            },
             "__cargo_web_snippet_199d5eb25dfe761687bcd487578eb7e636bd9650": function($0) {
                 $0 = Module.STDWEB_PRIVATE.to_js($0);console.log(($0));
             },
             "__cargo_web_snippet_3730ae2ea96d69416fa5ec352b8ebb9d03d0f955": function($0, $1, $2) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);$2 = Module.STDWEB_PRIVATE.to_js($2);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).getItem(($2));})());
             },
+            "__cargo_web_snippet_37ddf9cb1bdee4b88c6ff2298ca83dca5b359b37": function() {
+                window.location.replace(window.location.origin+window.location.pathname);
+            },
             "__cargo_web_snippet_421a1cbbb6d8cd3fce882ec5888027b0855feebe": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).localStorage;})());
-            },
-            "__cargo_web_snippet_5071ffc5f3ca590524af32fe82d35c6b15de6e2a": function() {
-                window.location.replace(window.location.origin);
             },
             "__cargo_web_snippet_5f44a6301f6a09d0f350d1015fd129f97bb1e755": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){try{return{value:function(){return($1).search;}(),success:true};}catch(error){return{error:error,success:false};}})());

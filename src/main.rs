@@ -23,6 +23,8 @@ pub fn main() {
 
 	log!("Hello world!");
 
+	document().head().unwrap().append_html("<link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />").ok();
+
 	let storage = window().local_storage();
 
 	let parsed = storage
@@ -38,7 +40,7 @@ pub fn main() {
 			.insert("picross", &serde_json::to_string(&picross).unwrap())
 			.ok();
 		js! {
-			window.location.replace(window.location.origin);
+			window.location.replace(window.location.origin + window.location.pathname);
 		};
 	} else {
 		let intro = include_str!("html/intro.html");
