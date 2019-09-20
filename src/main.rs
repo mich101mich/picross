@@ -3,10 +3,8 @@ extern crate stdweb;
 
 use crate::stdweb::web::*;
 
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 mod picross;
+use picross::Picross;
 mod renderer;
 
 #[macro_export]
@@ -23,11 +21,25 @@ pub fn main() {
 	#[cfg(debug_assertions)]
 	console_error_panic_hook::set_once();
 
-	// Your code goes here!
 	log!("Hello world!");
 
-	if let Some((width, height)) = parse_params() {
-		log!("width: {}, height: {}", width, height);
+	let storage = window().local_storage();
+
+	let parsed = storage
+		.get("picross")
+		.and_then(|json| serde_json::from_str(&json).ok());
+
+	if let Some(p) = parsed {
+		let picross: Picross = p;
+		log!("{}", picross.width);
+	} else if let Some((width, height)) = parse_params() {
+		let picross = Picross::new(width, height);
+		storage
+			.insert("picross", &serde_json::to_string(&picross).unwrap())
+			.ok();
+		js! {
+			window.location.replace(window.location.origin);
+		};
 	} else {
 		let intro = include_str!("html/intro.html");
 		document().body().unwrap().append_html(intro).unwrap();
@@ -37,7 +49,11 @@ pub fn main() {
 use std::str::FromStr;
 
 fn parse_params() -> Option<(usize, usize)> {
-	let search = &window().location()?.search().ok()?[1..];
+	let search = window().location()?.search().ok()?;
+	if search.is_empty() {
+		return None;
+	}
+	let search = &search[1..];
 	let mut params = search.split('&');
 	let width = params.next()?;
 	let height = params.next()?;

@@ -1,19 +1,23 @@
+use serde::{Deserialize, Serialize};
+use serde_repr::{Deserialize_repr, Serialize_repr};
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize_repr, Deserialize_repr)]
+#[repr(u8)]
 pub enum Value {
-	Hidden(bool),
+	HiddenNothing,
+	HiddenTile,
 	Correct,
 	Incorrect,
 	Marked,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Picross {
-	width: usize,
-	height: usize,
-	grid: Vec<Vec<Value>>,
-	horizontal: Vec<Vec<usize>>,
-	vertical: Vec<Vec<usize>>,
+	pub width: usize,
+	pub height: usize,
+	pub grid: Vec<Vec<Value>>,
+	pub horizontal: Vec<Vec<usize>>,
+	pub vertical: Vec<Vec<usize>>,
 }
 
 impl Picross {
@@ -21,7 +25,7 @@ impl Picross {
 		Self {
 			width,
 			height,
-			grid: vec![vec![Value::Hidden(false); width]; height],
+			grid: vec![vec![Value::HiddenNothing; width]; height],
 			horizontal: vec![vec![]; height],
 			vertical: vec![vec![]; width],
 		}
