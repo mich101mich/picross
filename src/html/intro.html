@@ -1,7 +1,12 @@
 <h2>Picross</h2>
 
 <form>
-	Width: <input type="text" name="width" id="width" required value="10"/>
-	Height: <input type="text" name="height" id="height" required value="10"/>
+	<p>
+		Width: <input type="number" name="width" value="10" required/>
+		Height: <input type="number" name="height" value="10" required/>
+	</p>
+	<p>
+		Difficulty (dense..sparse): <input type="range" min="5" max="95" name="difficulty" value="50" required/>
+	</p>
 	<input type="submit" value="Generate">
 </form>

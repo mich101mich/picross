@@ -1,0 +1,26 @@
+
+#picross {
+	table-layout: fixed;
+	border: 1px solid black;
+	border-collapse: collapse;
+
+	/* avoid selection */
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
+}
+
+#picross tr, #picross td {
+	width: 1.5rem;
+	height: 1.5rem;
+	text-align: center;
+	border: 1px solid black;
+	cursor: pointer;
+}
+
+#picross tr:hover {
+	background-color: #ddddff
+}

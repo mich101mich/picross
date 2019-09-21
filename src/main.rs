@@ -32,8 +32,10 @@ pub fn main() {
 	if let Some(p) = parsed {
 		let picross: Picross = p;
 		log!("{}", picross.width);
-	} else if let Some((width, height)) = parse_params() {
-		let picross = Picross::new(width, height);
+
+		renderer::render(&picross);
+	} else if let Some((width, height, difficulty)) = parse_params() {
+		let picross = Picross::new(width, height, difficulty);
 		storage
 			.insert("picross", &serde_json::to_string(&picross).unwrap())
 			.ok();
@@ -48,7 +50,7 @@ pub fn main() {
 
 use std::str::FromStr;
 
-fn parse_params() -> Option<(usize, usize)> {
+fn parse_params() -> Option<(usize, usize, usize)> {
 	let search = window().location()?.search().ok()?;
 	if search.is_empty() {
 		return None;
@@ -57,14 +59,19 @@ fn parse_params() -> Option<(usize, usize)> {
 	let mut params = search.split('&');
 	let width = params.next()?;
 	let height = params.next()?;
-	if !width.starts_with("width=") || !height.starts_with("height=") {
+	let difficulty = params.next()?;
+	if !width.starts_with("width=")
+		|| !height.starts_with("height=")
+		|| !difficulty.starts_with("difficulty=")
+	{
 		return None;
 	}
 	let width = usize::from_str(&width["width=".len()..]).ok()?;
 	let height = usize::from_str(&height["height=".len()..]).ok()?;
+	let difficulty = usize::from_str(&difficulty["difficulty=".len()..]).ok()?;
 
-	if width > 0 && height > 0 {
-		Some((width, height))
+	if width > 0 && height > 0 && difficulty >= 5 && difficulty <= 95 {
+		Some((width, height, difficulty))
 	} else {
 		None
 	}
