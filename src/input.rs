@@ -95,6 +95,7 @@ fn handle_event(left: bool, right: bool) {
 				} else {
 					cell.class_list().add("correct").expect("Class change");
 					picross.grid[y][x] = Value::Correct;
+					check_win(&picross);
 				}
 			}
 			v => panic!("Picross != Table at ({}, {}): {:?} vs hidden", x, y, v),
@@ -114,4 +115,27 @@ pub fn setup_inputs() {
 	for cell in table.query_selector_all("td.cell").unwrap() {
 		cell.add_event_listener(mouse_enter);
 	}
+}
+
+fn check_win(picross: &Picross) {
+	let win = picross
+		.grid
+		.iter()
+		.flat_map(|row| row.iter())
+		.find(|v| **v == Value::HiddenTile)
+		.is_none();
+	
+	if !win {
+		return;
+	}
+
+	let message = if picross.errors == 0 {
+		"With No Errors! Nice.".to_owned()
+	} else {
+		format!("(with {} Errors)", picross.errors)
+	};
+
+	js! {
+		setTimeout(() => alert("Congratulations! You Win!\n\n" + @{message}));
+	};
 }

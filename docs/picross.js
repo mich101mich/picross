@@ -591,6 +591,9 @@ Module.STDWEB_PRIVATE.acquire_tmp = function( dummy ) {
             "__cargo_web_snippet_421a1cbbb6d8cd3fce882ec5888027b0855feebe": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).localStorage;})());
             },
+            "__cargo_web_snippet_4a7577ac0d03a579d058c17351048ed6b21f4da7": function($0) {
+                $0 = Module.STDWEB_PRIVATE.to_js($0);setTimeout(()=>alert("Congratulations! You Win!\n\n"+($0)));
+            },
             "__cargo_web_snippet_565d7eb22cf4eeaca6c2215540351851e1420489": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).success})());
             },
