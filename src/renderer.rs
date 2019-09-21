@@ -44,7 +44,7 @@ pub fn render(picross: &Picross) {
 
 		let numbers = &picross.horizontal[y];
 		for _ in numbers.len()..max_horizontal {
-			row += "<td class=\"empty\"></td>";
+			row += "<td class=\"horizontal\"></td>";
 		}
 
 		for v in numbers.iter() {
@@ -57,11 +57,15 @@ pub fn render(picross: &Picross) {
 				class += " cell-left";
 			} else if x == picross.width - 1 {
 				class += " cell-right";
+			} else if x % 5 == 4 {
+				class += " highlight-right"
 			}
 			if y == 0 {
 				class += " cell-top";
 			} else if y == picross.height - 1 {
 				class += " cell-bottom";
+			} else if y % 5 == 4 {
+				class += " highlight-bottom"
 			}
 
 			use Value::*;

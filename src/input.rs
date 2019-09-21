@@ -84,7 +84,7 @@ fn handle_event(left: bool, right: bool) {
 					picross.errors += 1;
 					let errors = picross.errors.to_string();
 					js! {
-						setTimeout(() => alert("Whoops! Error\n" + @{errors} + " Errors Total"));
+						setTimeout(() => alert("Whoops! Error\n" + @{errors} + " Errors Total"), 100);
 					};
 				}
 			}
@@ -124,9 +124,20 @@ fn check_win(picross: &Picross) {
 		.flat_map(|row| row.iter())
 		.find(|v| **v == Value::HiddenTile)
 		.is_none();
-	
 	if !win {
 		return;
+	}
+
+	for y in 0..picross.height {
+		for x in 0..picross.width {
+			if picross.grid[y][x] == Value::HiddenNothing {
+				let elem = document()
+					.get_element_by_id(&format!("{}:{}", x, y))
+					.expect("Missing Cell");
+				elem.class_list().remove("hidden").expect("Class change");
+				elem.class_list().add("marked").expect("Class change");
+			}
+		}
 	}
 
 	let message = if picross.errors == 0 {
@@ -136,6 +147,6 @@ fn check_win(picross: &Picross) {
 	};
 
 	js! {
-		setTimeout(() => alert("Congratulations! You Win!\n\n" + @{message}));
+		setTimeout(() => alert("Congratulations! You Win!\n\n" + @{message}), 100);
 	};
 }

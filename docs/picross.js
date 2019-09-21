@@ -591,11 +591,11 @@ Module.STDWEB_PRIVATE.acquire_tmp = function( dummy ) {
             "__cargo_web_snippet_421a1cbbb6d8cd3fce882ec5888027b0855feebe": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).localStorage;})());
             },
-            "__cargo_web_snippet_4a7577ac0d03a579d058c17351048ed6b21f4da7": function($0) {
-                $0 = Module.STDWEB_PRIVATE.to_js($0);setTimeout(()=>alert("Congratulations! You Win!\n\n"+($0)));
-            },
             "__cargo_web_snippet_565d7eb22cf4eeaca6c2215540351851e1420489": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).success})());
+            },
+            "__cargo_web_snippet_5e765458401680b0056f4975f60a0af03fe75485": function($0) {
+                $0 = Module.STDWEB_PRIVATE.to_js($0);setTimeout(()=>alert("Congratulations! You Win!\n\n"+($0)),100);
             },
             "__cargo_web_snippet_614a3dd2adb7e9eac4a0ec6e59d37f87e0521c3b": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).error;})());
@@ -609,9 +609,6 @@ Module.STDWEB_PRIVATE.acquire_tmp = function( dummy ) {
             "__cargo_web_snippet_6fcce0aae651e2d748e085ff1f800f87625ff8c8": function($0) {
                 Module.STDWEB_PRIVATE.from_js($0, (function(){return document;})());
             },
-            "__cargo_web_snippet_704161f3aa795db4b181917b4c8d0ccf4ab53fa0": function($0) {
-                $0 = Module.STDWEB_PRIVATE.to_js($0);setTimeout(()=>alert("Whoops! Error\n"+($0)+" Errors Total"));
-            },
             "__cargo_web_snippet_7ba9f102925446c90affc984f921f414615e07dd": function($0, $1) {
                 $1 = Module.STDWEB_PRIVATE.to_js($1);Module.STDWEB_PRIVATE.from_js($0, (function(){return($1).body;})());
             },
@@ -620,6 +617,9 @@ Module.STDWEB_PRIVATE.acquire_tmp = function( dummy ) {
             },
             "__cargo_web_snippet_7c8dfab835dc8a552cd9d67f27d26624590e052c": function($0) {
                 var r = Module.STDWEB_PRIVATE.acquire_js_reference( $0 );return (r instanceof DOMException) && (r.name === "SyntaxError");
+            },
+            "__cargo_web_snippet_7e95a341a6e6a7e7dee1134dd2b2fcf581ce458d": function($0) {
+                $0 = Module.STDWEB_PRIVATE.to_js($0);setTimeout(()=>alert("Whoops! Error\n"+($0)+" Errors Total"),100);
             },
             "__cargo_web_snippet_80d6d56760c65e49b7be8b6b01c1ea861b046bf0": function($0) {
                 Module.STDWEB_PRIVATE.decrement_refcount( $0 );
