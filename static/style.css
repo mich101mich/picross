@@ -51,6 +51,16 @@
 	background-color: #ddddff
 }
 
+.cell.correct {
+	background-color: green;
+}
+.cell.incorrect {
+	background-color: red;
+}
+.cell.marked {
+	background-color: gray;
+}
+
 td {
 	position: relative;
 }

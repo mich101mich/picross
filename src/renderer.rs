@@ -64,7 +64,23 @@ pub fn render(picross: &Picross) {
 				class += " cell-bottom";
 			}
 
-			row += &format!("<td id=\"{}:{}\" class=\"{}\">{}</td>", y, x, class, v);
+			use Value::*;
+			match v {
+				HiddenNothing | HiddenTile => {
+					class += " hidden";
+				}
+				Correct => {
+					class += " correct";
+				}
+				Incorrect => {
+					class += " incorrect";
+				}
+				MarkedNothing | MarkedTile => {
+					class += " marked";
+				}
+			}
+
+			row += &format!("<td id=\"{}:{}\" class=\"{}\"></td>", x, y, class);
 		}
 
 		rows.push(row + "</tr>");

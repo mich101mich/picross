@@ -9,21 +9,8 @@ pub enum Value {
 	HiddenTile,
 	Correct,
 	Incorrect,
-	Marked,
-}
-
-impl std::fmt::Display for Value {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-		use Value::*;
-		let s = match *self {
-			HiddenNothing => " ",
-			HiddenTile => "O",
-			Correct => " O ",
-			Incorrect => " X ",
-			Marked => "<X>",
-		};
-		write!(f, "{}", s)
-	}
+	MarkedNothing,
+	MarkedTile,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -34,6 +21,7 @@ pub struct Picross {
 	pub grid: Vec<Vec<Value>>,
 	pub horizontal: Vec<Vec<usize>>,
 	pub vertical: Vec<Vec<usize>>,
+	pub errors: usize,
 }
 
 impl Picross {
@@ -118,6 +106,7 @@ impl Picross {
 			grid,
 			horizontal,
 			vertical,
+			errors: 0,
 		}
 	}
 }

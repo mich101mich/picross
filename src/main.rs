@@ -5,6 +5,7 @@ use crate::stdweb::web::*;
 
 mod picross;
 use picross::Picross;
+mod input;
 mod renderer;
 
 #[macro_export]
@@ -17,35 +18,42 @@ macro_rules! log {
 	};
 }
 
+fn load_picross() -> Option<Picross> {
+	window()
+		.local_storage()
+		.get("picross")
+		.and_then(|json| serde_json::from_str(&json).ok())
+}
+
+fn save_picross(picross: &Picross) {
+	window()
+		.local_storage()
+		.insert("picross", &serde_json::to_string(&picross).unwrap())
+		.expect("Save Picross");
+}
+
 pub fn main() {
 	#[cfg(debug_assertions)]
 	console_error_panic_hook::set_once();
 
 	log!("Hello world!");
 
-	let storage = window().local_storage();
+	let picross: Picross;
 
-	let parsed = storage
-		.get("picross")
-		.and_then(|json| serde_json::from_str(&json).ok());
-
-	if let Some(p) = parsed {
-		let picross: Picross = p;
+	if let Some(p) = load_picross() {
+		picross = p;
 		log!("{}", picross.width);
-
-		renderer::render(&picross);
 	} else if let Some((width, height, difficulty)) = parse_params() {
-		let picross = Picross::new(width, height, difficulty);
-		storage
-			.insert("picross", &serde_json::to_string(&picross).unwrap())
-			.ok();
-		js! {
-			window.location.replace(window.location.origin + window.location.pathname);
-		};
+		picross = Picross::new(width, height, difficulty);
+		save_picross(&picross);
 	} else {
 		let intro = include_str!("html/intro.html");
 		document().body().unwrap().append_html(intro).unwrap();
+		return;
 	}
+
+	renderer::render(&picross);
+	input::setup_inputs();
 }
 
 use std::str::FromStr;
