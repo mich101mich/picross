@@ -4,5 +4,6 @@
 	</table>
 </p>
 <p>
-	<button onclick="window.localStorage.removeItem('picross'); window.location.reload()">New</button>
+	<button onclick="window.localStorage.removeItem('picross');window.location.reload();">Config</button>
+	<button onclick="let l=window.localStorage;let ps='picross';let p=JSON.parse(l.getItem(ps));l.removeItem(ps);window.location.search=`?width=${p.width}&height=${p.height}&difficulty=${p.difficulty}`">New</button>
 </p>

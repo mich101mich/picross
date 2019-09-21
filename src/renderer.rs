@@ -4,28 +4,73 @@ use stdweb::web::*;
 pub fn render(picross: &Picross) {
 	let output = include_str!("html/picross.html");
 
-	let col_groups: String = (0..picross.width)
-		.map(|x| format!("<col id=\"col_{}\">", x))
+	let max_horizontal: usize = picross
+		.horizontal
+		.iter()
+		.map(|v| v.len())
+		.max()
+		.unwrap_or(0);
+
+	let max_vertical: usize = picross.vertical.iter().map(|v| v.len()).max().unwrap_or(0);
+
+	let col_groups: String = (0..max_horizontal)
+		.map(|_| format!("<col>"))
+		.chain((0..picross.width).map(|x| format!("<col id=\"col_{}\">", x)))
 		.collect();
-	
 	let col_groups = format!("<colgroup>{}</colgroup>", col_groups);
 
-	let grid: String = picross
-		.grid
-		.iter()
-		.enumerate()
-		.map(|(y, row)| {
-			let r: String = row
-				.iter()
-				.enumerate()
-				.map(|(x, v)| format!("<td id=\"{}:{}\">{}</td>", y, x, v))
-				.collect();
+	let mut rows = vec![];
 
-			format!("<tr>{}</tr>", r)
-		})
-		.collect();
+	for y in 0..max_vertical {
+		let mut row = String::from("<tr>");
+		for _ in 0..max_horizontal {
+			row += "<td class=\"empty\"></td>";
+		}
 
-	let content = format!("{}\n{}", col_groups, grid);
+		for col in picross.vertical.iter() {
+			let offset = max_vertical - col.len();
+			if y >= offset {
+				row += &format!("<td class=\"vertical\">{}</td>", col[y - offset]);
+			} else {
+				row += "<td class=\"vertical\"></td>";
+			}
+		}
+
+		rows.push(row + "</tr>");
+	}
+
+	for y in 0..picross.height {
+		let mut row = String::from("<tr class=\"cell-row\">");
+
+		let numbers = &picross.horizontal[y];
+		for _ in numbers.len()..max_horizontal {
+			row += "<td class=\"empty\"></td>";
+		}
+
+		for v in numbers.iter() {
+			row += &format!("<td class=\"horizontal\">{}</td>", v);
+		}
+
+		for (x, v) in picross.grid[y].iter().enumerate() {
+			let mut class = String::from("cell");
+			if x == 0 {
+				class += " cell-left";
+			} else if x == picross.width - 1 {
+				class += " cell-right";
+			}
+			if y == 0 {
+				class += " cell-top";
+			} else if y == picross.height - 1 {
+				class += " cell-bottom";
+			}
+
+			row += &format!("<td id=\"{}:{}\" class=\"{}\">{}</td>", y, x, class, v);
+		}
+
+		rows.push(row + "</tr>");
+	}
+
+	let content = format!("{}\n{}", col_groups, rows.join("\n"));
 
 	let output = output.replace("{{{picross}}}", &content);
 

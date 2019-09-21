@@ -1,8 +1,10 @@
 
 #picross {
 	table-layout: fixed;
-	border: 1px solid black;
+	border: none;
 	border-collapse: collapse;
+	text-align: center;
+	overflow: hidden;
 
 	/* avoid selection */
 	-webkit-touch-callout: none; /* iOS Safari */
@@ -13,14 +15,53 @@
 	user-select: none;
 }
 
-#picross tr, #picross td {
-	width: 1.5rem;
+#picross tr {
 	height: 1.5rem;
-	text-align: center;
-	border: 1px solid black;
+}
+
+.horizontal {
+	height: 1.5rem;
+	width: 1.3rem;
+}
+.vertical {
+	width: 1.5rem;
+}
+
+.cell {
+	height: 1.5rem;
+	width: 1.5rem;
+	border: 1px solid darkgray;
 	cursor: pointer;
 }
 
-#picross tr:hover {
+.cell-left {
+	border-left: 2px solid black;
+}
+.cell-right {
+	border-right: 2px solid black;
+}
+.cell-top {
+	border-top: 2px solid black;
+}
+.cell-bottom {
+	border-bottom: 2px solid black;
+}
+
+.cell-row:hover {
 	background-color: #ddddff
+}
+
+td {
+	position: relative;
+}
+
+.cell:hover::after, .vertical:hover::after {
+  content: "";
+  position: absolute;
+  background-color: #ddddff;
+  left: 0;
+  top: -5000px;
+  height: 10000px;
+  width: 100%;
+  z-index: -1;
 }

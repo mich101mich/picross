@@ -51,24 +51,16 @@ pub fn main() {
 use std::str::FromStr;
 
 fn parse_params() -> Option<(usize, usize, usize)> {
-	let search = window().location()?.search().ok()?;
-	if search.is_empty() {
-		return None;
-	}
-	let search = &search[1..];
-	let mut params = search.split('&');
-	let width = params.next()?;
-	let height = params.next()?;
-	let difficulty = params.next()?;
-	if !width.starts_with("width=")
-		|| !height.starts_with("height=")
-		|| !difficulty.starts_with("difficulty=")
-	{
-		return None;
-	}
-	let width = usize::from_str(&width["width=".len()..]).ok()?;
-	let height = usize::from_str(&height["height=".len()..]).ok()?;
-	let difficulty = usize::from_str(&difficulty["difficulty=".len()..]).ok()?;
+	let url = url::Url::from_str(&window().location()?.href().ok()?).ok()?;
+	let query = url.query_pairs();
+
+	let width = query.clone().find(|(name, _)| name == "width")?.1;
+	let height = query.clone().find(|(name, _)| name == "height")?.1;
+	let difficulty = query.clone().find(|(name, _)| name == "difficulty")?.1;
+
+	let width = usize::from_str(&width).ok()?;
+	let height = usize::from_str(&height).ok()?;
+	let difficulty = usize::from_str(&difficulty).ok()?;
 
 	if width > 0 && height > 0 && difficulty >= 5 && difficulty <= 95 {
 		Some((width, height, difficulty))

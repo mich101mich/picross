@@ -16,8 +16,8 @@ impl std::fmt::Display for Value {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 		use Value::*;
 		let s = match *self {
-			HiddenNothing => "[ ]",
-			HiddenTile => "[O]",
+			HiddenNothing => " ",
+			HiddenTile => "O",
 			Correct => " O ",
 			Incorrect => " X ",
 			Marked => "<X>",
@@ -30,6 +30,7 @@ impl std::fmt::Display for Value {
 pub struct Picross {
 	pub width: usize,
 	pub height: usize,
+	pub difficulty: usize,
 	pub grid: Vec<Vec<Value>>,
 	pub horizontal: Vec<Vec<usize>>,
 	pub vertical: Vec<Vec<usize>>,
@@ -42,15 +43,14 @@ impl Picross {
 		let mut grid = vec![vec![Value::HiddenNothing; width]; height];
 
 		let difficulty_scale = 2.0 - difficulty as f32 / 50.0;
-		let cell_count = (width + height) as f32;
 
-		let pre_placed = (difficulty_scale.powf(2.0) * cell_count).ceil() as usize;
+		let pre_placed = (difficulty_scale.powf(2.0) * (width + height) as f32).ceil() as usize;
 
 		for _ in 0..pre_placed {
 			grid[r.gen_range(0, height)][r.gen_range(0, width)] = Value::HiddenTile;
 		}
 
-		let iterations = (difficulty_scale * (cell_count / 10.0 + 1.0)).ceil() as usize;
+		let iterations = (difficulty_scale * 3.0).ceil() as usize;
 
 		for _ in 0..iterations {
 			for y in 0..height {
@@ -68,19 +68,56 @@ impl Picross {
 						.map(|tile| if tile { 1 } else { 0 })
 						.sum();
 
-					if r.gen_range(0, count * 2 + 12) > 10 {
+					let probability = (count as f32 * 2.5) as usize + 12;
+					if r.gen_range(0, probability) > 10 {
 						grid[y][x] = Value::HiddenTile;
 					}
 				}
 			}
 		}
 
+		let mut horizontal = vec![vec![]; height];
+
+		for (y, out) in horizontal.iter_mut().enumerate() {
+			let mut current = 0;
+			for v in grid[y].iter().chain(std::iter::once(&Value::HiddenNothing)) {
+				if *v == Value::HiddenTile {
+					current += 1;
+				} else if current > 0 {
+					out.push(current);
+					current = 0;
+				}
+			}
+		}
+
+		let mut vertical = vec![vec![]; width];
+
+		for (x, out) in vertical.iter_mut().enumerate() {
+			let mut current = 0;
+			for v in grid
+				.iter()
+				.map(|row| &row[x])
+				.chain(std::iter::once(&Value::HiddenNothing))
+			{
+				if *v == Value::HiddenTile {
+					current += 1;
+				} else if current > 0 {
+					out.push(current);
+					current = 0;
+				}
+			}
+		}
+
+		crate::log!("vertical: {:?}", vertical);
+		crate::log!("horizontal: {:?}", horizontal);
+
 		Self {
 			width,
 			height,
-			grid: grid,
-			horizontal: vec![vec![]; height],
-			vertical: vec![vec![]; width],
+			difficulty,
+			grid,
+			horizontal,
+			vertical,
 		}
 	}
 }
