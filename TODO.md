@@ -1,0 +1,6 @@
+- Grey out Numbers on the side
+- Better Mobile Support
+  - Buttons for left/right mouse
+  - drag to fill
+- Progressive Web App
+- Chrome App

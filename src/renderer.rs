@@ -14,7 +14,7 @@ pub fn render(picross: &Picross) {
 	let max_vertical: usize = picross.vertical.iter().map(|v| v.len()).max().unwrap_or(0);
 
 	let col_groups: String = (0..max_horizontal)
-		.map(|_| format!("<col>"))
+		.map(|_| "<col>".to_string())
 		.chain((0..picross.width).map(|x| format!("<col id=\"col_{}\">", x)))
 		.collect();
 	let col_groups = format!("<colgroup>{}</colgroup>", col_groups);

@@ -1,9 +1,22 @@
-<p>
+<div style="float: left; padding: 5px">
 	<table id="picross">
 		{{{picross}}}
 	</table>
-</p>
-<p>
-	<button onclick="window.localStorage.removeItem('picross');window.location.search = '';">Config</button>
-	<button onclick="let l=window.localStorage;let ps='picross';let p=JSON.parse(l.getItem(ps));l.removeItem(ps);window.location.search=`?width=${p.width}&height=${p.height}&difficulty=${p.difficulty}`">New</button>
-</p>
+</div>
+
+<div style="float: left; padding: 5px">
+	<div>
+		<button id="button-correct" disabled>
+			<div class="cell correct" onclick="clickCorrectButton()"></div>
+		</button>
+	</div>
+	<div>
+		<button id="button-marked">
+			<div class="cell marked" onclick="clickMarkedButton()"></div>
+		</button>
+	</div>
+</div>
+<div style="float: left; padding: 5px">
+	<button onclick="clickConfigButton()">Config</button>
+	<button onclick="clickNewButton()">New</button>
+</div>

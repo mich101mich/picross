@@ -12,6 +12,25 @@
     <script>
         var Module = {};
         var __cargo_web = {};
+
+        function clickCorrectButton() {
+            document.getElementById("button-correct").setAttribute("disabled", "disabled");
+            document.getElementById("button-marked").removeAttribute("disabled");
+        }
+        function clickMarkedButton() {
+            document.getElementById("button-correct").removeAttribute("disabled");
+            document.getElementById("button-marked").setAttribute("disabled", "disabled");
+        }
+        function clickConfigButton() {
+            window.localStorage.removeItem("picross");
+            window.location.search = '';
+        }
+        function clickNewButton() {
+            let l = window.localStorage;
+            let p = JSON.parse(l.getItem("picross"));
+            l.removeItem("picross");
+            window.location.search = `?width=${p.width}&height=${p.height}&difficulty=${p.difficulty}`;
+        }
     </script>
 </head>
 

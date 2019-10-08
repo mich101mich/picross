@@ -37,6 +37,9 @@
 	height: 1.5rem;
 	width: 1.5rem;
 	border: 1px solid #999;
+}
+
+#picross .cell {
 	cursor: pointer;
 	position: relative;
 }
@@ -72,16 +75,16 @@
 	content: "X";
 	color: red;
 	font-family: sans-serif;
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 }
 .cell.marked::before {
 	content: "X";
 	color: #aaa;
 	font-family: sans-serif;
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 }
 
-.cell:hover::after, .vertical:hover::after {
+#picross .cell:hover::after, .vertical:hover::after {
   content: "";
   position: absolute;
   background-color: #ddddff;
@@ -90,4 +93,22 @@
   height: 10000px;
   width: 100%;
   z-index: -1;
+}
+
+button, input[type=submit] {
+	background-color: #ccc;
+	border: none;
+	padding: 5px;
+	color: black;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+button:disabled{
+	background: #777
+}
+
+button .cell {
+	background: white;
 }

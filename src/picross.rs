@@ -47,7 +47,7 @@ impl Picross {
 						continue;
 					}
 					let count: usize = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-						.into_iter()
+						.iter()
 						.map(|(dx, dy)| (x as isize + dx, y as isize + dy))
 						.filter(|&(x, y)| {
 							x > 0 && x < width as isize && y > 0 && y < height as isize

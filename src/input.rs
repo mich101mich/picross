@@ -43,7 +43,8 @@ fn handle_event(left: bool, right: bool) {
 	if !left && !right {
 		return;
 	}
-	let marking = right;
+	let swapped = document().get_element_by_id("button-marked").expect("Missing button-correct Element").has_attribute("disabled");
+	let marking = right != swapped;
 
 	if marking {
 		if let Some(cell) = document().query_selector("td.cell.marked:hover").unwrap() {
